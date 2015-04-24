@@ -3,6 +3,7 @@
 module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'client',
+    podModulePrefix: 'client/pods',
     environment: environment,
     baseURL: '/',
     locationType: 'auto',
@@ -10,6 +11,11 @@ module.exports = function(environment) {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
         // e.g. 'with-controller': true
+        'ember-htmlbars': true,
+        'ember-htmlbars-block-params': true,
+        'ember-htmlbars-each-with-index': true,
+        'ember-htmlbars-attribute-syntax': true,
+        'ember-htmlbars-component-generation': true
       }
     },
 
@@ -18,6 +24,26 @@ module.exports = function(environment) {
       // when it is created
     }
   };
+
+  ENV.contentSecurityPolicy =  {
+    'default-src': "'self' https://maps.googleapis.com",
+    'font-src': "*",
+    'connect-src': "'self' https://maps.googleapis.com",
+    'img-src': "*",
+    'style-src': "* 'unsafe-inline'",
+    'frame-src': "*",
+    'script-src': "'self' 'unsafe-eval' *.googleapis.com *.gstatic.com"
+  };
+
+  ENV['simple-auth'] = {
+    authorizer: 'simple-auth-authorizer:oauth2-bearer'
+  };
+
+  ENV['simple-auth-oauth2'] = {
+    refreshAccessTokens: true,
+    serverTokenEndpoint: '/api/v1/auths/login'
+  };
+
 
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
